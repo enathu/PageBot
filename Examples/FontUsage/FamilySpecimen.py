@@ -17,7 +17,7 @@ from pagebot.publications.typespecimen import TypeSpecimen
 # Page and Template instances are holding all elements of a page together.
 from pagebot.elements.pbpage import Page, Template
 from pagebot import newFS
-# Use Erik & Jonathan’s Filibuster to create random imaginary headlines. 
+# Use Erik & Jonathan's Filibuster to create random imaginary headlines. 
 from pagebot.contributions.filibuster.blurb import blurb
 
 DEBUG = False # Make True to see grid and element frames.
