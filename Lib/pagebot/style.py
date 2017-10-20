@@ -17,7 +17,12 @@
 #
 import sys
 import copy
-from drawBot import sizes
+
+try:
+  from drawBot import sizes as drawBotSizes
+  sizes = drawBotSizes()
+except:
+  sizes = {}
 
 from pagebot.toolbox.units import MM, INCH, mm, fr, pt, px, perc
 
@@ -72,15 +77,15 @@ Letter = 8.5*INCH, 11*INCH
 Legal = 8.5*INCH, 14*INCH
 JuniorLegal = 5*INCH, 8*INCH
 Tabloid = 11*INCH, 17*INCH
-# Other rounded definintions compatible to DrawBot
-drawBotSizes = sizes()
-Screen = drawBotSizes.get('screen', None) # Current screen size.
-Ledger = sizes('Ledger') # 1224, 792
-Statement = sizes('Statement') # 396, 612 
-Executive = sizes('Executive') # 540, 720
-Folio = sizes('Folio') # 612, 936
-Quarto = sizes('Quarto') # 610, 780
-Size10x14 = sizes('10x14') # 720, 1008
+
+# Other rounded definitions compatible to DrawBot/Flat
+Screen = sizes.get('screen', None) # Current screen size.
+Ledger = sizes.get('Ledger', [1224, 792])
+Statement = sizes.get('Statement', [396, 612])
+Executive = sizes.get('Executive', [540, 720])
+Folio = sizes.get('Folio', [612, 936])
+Quarto = sizes.get('Quarto', [610, 780])
+Size10x14 = sizes.get('10x14', [720, 1008])
 
 # Hybrid sizes
 # International generic fit for stationary
