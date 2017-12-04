@@ -13,8 +13,6 @@
 #
 #     composer.py
 #
-from drawBot import FormattedString
-
 class Composer(object):
     u"""A Composer takes a galley and tries to make a “nice” layout (on existing or new document pages),
     by taking the elements from the galley pasteboard and finding the best place in pages, e.g. in

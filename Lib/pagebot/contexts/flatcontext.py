@@ -23,7 +23,7 @@ import os
 from basecontext import BaseContext
 from pagebot.style import NO_COLOR
 from pagebot.contexts.builders.flatbuilder import flatBuilder
-from pagebot.contexts.strings. flatstring import FlatString, newFlatString
+from pagebot.contexts.strings.flatstring import FlatString, newFlatString
 
 class FlatContext(BaseContext):
     u"""A FlatContext instance combines the specific functions of the Flat library, 
@@ -108,7 +108,7 @@ class FlatContext(BaseContext):
         return s
 
     def newBulletString(self, bullet, e=None, style=None):
-        return cls.newString(bullet, e=e, style=style)
+        return self.newString(bullet, e=e, style=style)
 
     def text(self, bs):
         self.b.text(bs.s, p)

@@ -13,12 +13,7 @@
 #
 #     flatbuilder.py
 #
-try: 
-    import flat
-    flatBuilder = flat
-    # Id to make builder hook name. Views will be calling e.build_html()
-    flatBuilder.PB_ID = 'flat' 
-
-except ImportError:
-    flatBuilder = None
-
+import flat
+flatBuilder = flat
+# Id to make builder hook name. Views will be calling e.build_html()
+flatBuilder.PB_ID = 'flat' 

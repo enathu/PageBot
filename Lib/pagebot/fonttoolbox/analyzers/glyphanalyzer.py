@@ -19,7 +19,7 @@ import sys
 import weakref
 
 # TODO: Import needs to be done inside DrawBotContext
-from AppKit import NSBezierPath
+# from AppKit import NSBezierPath
 
 from pagebot.toolbox.transformer import point2D, asInt
 from apointcontextlist import Vertical, Horizontal

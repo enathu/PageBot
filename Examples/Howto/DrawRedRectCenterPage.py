@@ -19,13 +19,13 @@ from pagebot.style import getRootStyle, A5, BOTTOM, CENTER, MIDDLE
 from pagebot.document import Document
 from pagebot.elements import *
 from pagebot.conditions import *
-    
+
 W, H = A5 
 W = 400
 H = 480
 ShowOrigins = False
 ShowElementInfo = False
-RedSect = True # Show red or gray
+RedRect = True # Show red or gray
 RectSize = 300
 
 def makeDocument():
@@ -68,16 +68,17 @@ def makeDocument():
     view.showElementInfo = ShowElementInfo # Show baxes with element info element.
     
     return doc
-   
+
 if __name__ == '__main__':
 
-    Variable([
-        #dict(name='ElementOrigin', ui='CheckBox', args=dict(value=False)),
-        dict(name='ShowOrigins', ui='CheckBox', args=dict(value=True)),
-        dict(name='ShowElementInfo', ui='CheckBox', args=dict(value=False)),
-        dict(name='RedRect', ui='CheckBox', args=dict(value=True)),
-        dict(name='RectSize', ui='Slider', args=dict(minValue=10, value=W/2, maxValue=W)),
-    ], globals())
+    if 0:
+        Variable([
+            #dict(name='ElementOrigin', ui='CheckBox', args=dict(value=False)),
+            dict(name='ShowOrigins', ui='CheckBox', args=dict(value=True)),
+            dict(name='ShowElementInfo', ui='CheckBox', args=dict(value=False)),
+            dict(name='RedRect', ui='CheckBox', args=dict(value=True)),
+            dict(name='RectSize', ui='Slider', args=dict(minValue=10, value=W/2, maxValue=W)),
+        ], globals())
          
     d = makeDocument()
     d.export('_export/DrawRedRectCenterPage.png')

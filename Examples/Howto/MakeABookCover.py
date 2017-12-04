@@ -25,7 +25,8 @@ from pagebot.document import Document
 # Import element layout conditions.
 from pagebot.conditions import *
 from pagebot.elements import *
-   
+from random import random
+
 # For clarity, most of the OneValidatingPage.py example documenet is setup as a sequential excecution of
 # Python functions. For complex documents this is not the best method. More functions and classes
 # will be used in the real templates, which are available from the OpenSource PageBotTemplates repository.
@@ -60,7 +61,7 @@ RS = getRootStyle(
     originTop = True,
 )
 
-EXPORT_PATH = '_export/ABookCover.pdf' # Export in folder that does not commit un Git. Force to export PDF.
+EXPORT_PATH = '_export/ABookCover.pdf' # Export in folder that does not commit on Git. Force to export PDF.
 
 def makeDocument(rootStyle):
     u"""Demo random book cover generator."""
@@ -76,46 +77,105 @@ def makeDocument(rootStyle):
     C2 = lighter(C1, 0.9) # Almost white, tinted to the background color.
     C3 = darker(C1, 0.75) # Default parameter 50% between background color and white.
     C4 = darker(C1, 0.5) # Default parameter 50% between background color and white.
-    
-    # Make background element, filling the page color and bleed.
-    colorRect1 = pageArea = newRect(z=-10, name='Page area', parent=page,
-        conditions=[Top2TopSide(), Left2LeftSide(), Fit2RightSide(), Fit2BottomSide()], fill=C1)
-    
-    colorRect1.solve() # Solve element position, before we can make other elements depend on position and size.
+    C1 = (0, 0, 0)
 
-    M = 64
-    colorRect2 = newRect(z=-10, name='Frame 2', conditions=[Center2Center(), Middle2Middle()], 
-        fill=C4, stroke=None, 
-        w=colorRect1.w-M, h=colorRect1.h-M, xAlign=CENTER, yAlign=CENTER )
+    # Make background element, filling the page color and bleed.
+    pageArea = newRect(z=-10,
+                       name='Page area',
+                       parent=page,
+                       conditions=[Top2TopSide(),
+                                   Left2LeftSide(),
+                                   Fit2RightSide(),
+                                   Fit2BottomSide()],
+                       fill=C1)
+
+    pageArea.solve() # Solve element position, before we can make
+                     # other elements depend on position and size.
+
+    if 0:
+      M = 64
+      newRect(z=-10,
+            name='Frame 2',
+            parent=page,
+            conditions=[Center2Center(),
+                        Middle2Middle()], 
+            fill=C4,
+            stroke=None,
+            w=pageArea.w - M,
+            h=pageArea.h - M)
+            #xAlign=CENTER,
+            #yAlign=CENTER)
 
     # Add some title (same width, different height) at the "wrongOrigin" position.
     # They will be repositioned by solving the colorConditions.
-    e1 = newText('Book Cover', style=rootStyle, parent=page, name='Other element', 
-        font='Georgia', fontSize=40, fill=(0.3, 0.3, 0.5), textFill=(1, 0, 0),
-        conditions=[Top2Middle(), Top2Top()], 
-        xAlign=CENTER) #yAlign=TOP)
+    newText('Book Cover',
+            style=rootStyle,
+            parent=page,
+            name='Other element',
+            font='Georgia',
+            fontSize=40,
+            fill=(0.3, 0.3, 0.5),
+            textFill=(255, 0, 0),
+            conditions=[#Top2Middle(),
+                        Top2Top()], 
+            xAlign=CENTER,
+            yAlign=TOP)
     """
-    e2 = page.rect(point=wrongOrigin, style=rootStyle, w=W2, h=H2, name='Floating element 2', 
-        conditions=colorCondition2, fill=(1, 1, 0), xAlign=LEFT, yAlign=TOP)
-    e3 = page.rect(point=wrongOrigin, style=rootStyle, w=W3, h=H3, name='Floating element 3', 
-        conditions=colorCondition2, fill=(1, 0, 1), xAlign=LEFT, yAlign=TOP)
+    e2 = page.rect(point=wrongOrigin,
+                   style=rootStyle,
+                   w=W2,
+                   h=H2,
+                   name='Floating element 2',
+                   conditions=colorCondition2,
+                   fill=(1, 1, 0),
+                   xAlign=LEFT,
+                   yAlign=TOP)
+    e3 = page.rect(point=wrongOrigin,
+                   style=rootStyle,
+                   w=W3,
+                   h=H3,
+                   name='Floating element 3',
+                   conditions=colorCondition2,
+                   fill=(1, 0, 1),
+                   xAlign=LEFT,
+                   yAlign=TOP)
     # Make text box at wrong origin. Apply same width a the color rect, which may
     # be too wide from typographic point ogf view. The MaxWidthByFontSize will set the 
     # self.w to the maximum width for this pointSize.
     if not hasattr(pbglobals, 'blurbText'):
-        pbglobals.blurbText = doc.context.newString(blurb.getBlurb('article_summary', noTags=True),
+        pbglobals.blurbText = doc.context.newString(blurb.getBlurb('article_summary',
+                                                                   noTags=True),
                                                     page,
                                                     style=dict(font='Georgia',
                                                                fontSize=12,
                                                                rLeading=0.2,
                                                                textColor=0))
-    eTextBox = page.textBox(pbglobals.blurbText, point=wrongOrigin, style=rootStyle, w=WT,
-        conditions=textCondition, xAlign=CENTER, yAlign=CENTER)
+    eTextBox = page.textBox(pbglobals.blurbText,
+                            point=wrongOrigin,
+                            style=rootStyle,
+                            w=WT,
+                            conditions=textCondition,
+                            xAlign=CENTER,
+                            yAlign=CENTER)
 
-    e4 = page.rect(point=wrongOrigin, style=rootStyle, w=W4, h=H4, name='Floating element 4', 
-        conditions=colorCondition2, fill=(0, 1, 1), xAlign=LEFT, yAlign=TOP)
-    e5 = page.rect(point=wrongOrigin, style=rootStyle, w=W5, h=H5, name='Floating element 5', 
-        conditions=[FloatRightTopSides()], fill=(0, 1, 0), xAlign=LEFT, yAlign=TOP)
+    e4 = page.rect(point=wrongOrigin,
+                   style=rootStyle,
+                   w=W4,
+                   h=H4,
+                   name='Floating element 4',
+                   conditions=colorCondition2,
+                   fill=(0, 1, 1),
+                   xAlign=LEFT,
+                   yAlign=TOP)
+    e5 = page.rect(point=wrongOrigin,
+                   style=rootStyle,
+                   w=W5,
+                   h=H5,
+                   name='Floating element 5',
+                   conditions=[FloatRightTopSides()],
+                   fill=(0, 1, 0),
+                   xAlign=LEFT,
+                   yAlign=TOP)
     """
     score = page.evaluate()
     #print 'Page value on evaluation:', score
